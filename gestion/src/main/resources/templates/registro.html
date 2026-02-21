@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
 </head>
 <body>
 
-<h2>Registro</h2>
+<div class="auth-container">
+    <h2>Crear Cuenta</h2>
 
-<form action="/guardarUsuario" method="post">
-    
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}" />
+    <form th:action="@{/guardarUsuario}" method="post">
 
-    <input type="text" name="username" placeholder="Usuario"/>
-    <br><br>
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
 
-    <input type="password" name="password" placeholder="Password"/>
-    <br><br>
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Usuario" required>
+        </div>
 
-    <button type="submit">Guardar</button>
-</form>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Contraseña" required>
+        </div>
 
-<a href="/login">Volver al login</a>
+        <button type="submit" class="btn">Registrarse</button>
+
+        <div class="auth-link">
+            ¿Ya tienes cuenta?
+            <a th:href="@{/login}">Inicia sesión</a>
+        </div>
+
+    </form>
+</div>
 
 </body>
 </html>

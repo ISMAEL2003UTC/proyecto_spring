@@ -2,25 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Menú Principal</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
 
 <div class="container">
-    <h1>Bienvenido al Sistema de Gestión Empresarial</h1>
+    <h1>Panel Principal</h1>
 
     <div class="menu">
 
-        <a class="btn" th:href="@{/empleados}">
+        <a class="card-btn card-blue" th:href="@{/empleados}">
             Gestión de Empleados
         </a>
 
-        <a class="btn" th:href="@{/historias}">
+        <a class="card-btn card-green" th:href="@{/historias}">
             Historia Clínica Externa
         </a>
 
-        <a class="btn logout" th:href="@{/logout}">
+        <a class="card-btn card-red" th:href="@{/logout}">
             Cerrar Sesión
         </a>
 
