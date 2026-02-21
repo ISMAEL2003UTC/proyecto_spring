@@ -8,13 +8,17 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "codigo_usu")
+    private Long codigoUsu;
 
+    @Column(name = "usuario_usu")
     private String username;
 
+    @Column(name = "password_usu")
     private String password;
 
-    private String role; // ADMIN o USER
+    @Column(name = "role")
+    private String role;
 
     // getters y setters
 }
