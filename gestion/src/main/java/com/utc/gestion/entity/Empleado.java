@@ -28,5 +28,53 @@ public class Empleado {
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
     private List<HistoriaClinicaExterna> historias;
 
-    // getters y setters
+    // ===== GETTERS Y SETTERS =====
+
+    public Long getCodigoEmp() {
+        return codigoEmp;
+    }
+
+    public void setCodigoEmp(Long codigoEmp) {
+        this.codigoEmp = codigoEmp;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<HistoriaClinicaExterna> getHistorias() {
+        return historias;
+    }
+
+    public void setHistorias(List<HistoriaClinicaExterna> historias) {
+        this.historias = historias;
+    }
 }
