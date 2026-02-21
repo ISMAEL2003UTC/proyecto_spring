@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Nuevo Empleado</h2>
+
+<form th:action="@{/empleados/guardar}" 
+      th:object="${empleado}" method="post">
+
+    Nombre:
+    <input type="text" th:field="*{nombre}" /><br>
+
+    Apellido:
+    <input type="text" th:field="*{apellido}" /><br>
+
+    Identificación:
+    <input type="text" th:field="*{identificacion}" /><br>
+
+    Email:
+    <input type="email" th:field="*{email}" /><br>
+
+    <button type="submit">Guardar</button>
+
+</form>
+
+</body>
+</html>
