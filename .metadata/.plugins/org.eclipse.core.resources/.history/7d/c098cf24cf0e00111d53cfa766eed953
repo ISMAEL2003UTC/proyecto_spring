@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Bienvenido al Sistema de Gestión Empresarial</h1>
+<a href="/logout">Cerrar sesión</a>
+</body>
+</html>

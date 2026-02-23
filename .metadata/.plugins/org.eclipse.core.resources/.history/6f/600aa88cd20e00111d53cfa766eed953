@@ -1,0 +1,85 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 60px 50px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    width: 500px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.container h1 {
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+/* ===== MENU GRID ===== */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===== BUTTON STYLE ===== */
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.6);
+}
+
+/* ===== LOGOUT BUTTON ===== */
+.logout {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+}
+
+.logout:hover {
+    box-shadow: 0 12px 25px rgba(220, 38, 38, 0.6);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

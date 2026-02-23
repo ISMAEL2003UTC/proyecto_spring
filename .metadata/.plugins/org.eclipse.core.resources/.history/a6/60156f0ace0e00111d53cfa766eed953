@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+</head>
+<body>
+
+<h2>Registro</h2>
+
+<form action="/guardarUsuario" method="post">
+    
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}" />
+
+    <input type="text" name="username" placeholder="Usuario"/>
+    <br><br>
+
+    <input type="password" name="password" placeholder="Password"/>
+    <br><br>
+
+    <button type="submit">Guardar</button>
+</form>
+
+<a href="/login">Volver al login</a>
+
+</body>
+</html>

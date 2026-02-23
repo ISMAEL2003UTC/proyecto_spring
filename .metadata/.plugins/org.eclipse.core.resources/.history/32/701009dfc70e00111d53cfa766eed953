@@ -1,0 +1,5 @@
+package com.utc.gestion.security;
+
+public class SecurityConfig {
+
+}

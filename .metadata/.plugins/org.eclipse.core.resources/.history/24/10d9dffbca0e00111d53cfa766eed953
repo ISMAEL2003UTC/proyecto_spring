@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+</head>
+<body>
+
+<h2>Registro de Usuario</h2>
+
+<form th:action="@{/guardarUsuario}" th:object="${usuario}" method="post">
+
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}" />
+
+    <div>
+        <label>Usuario:</label>
+        <input type="text" th:field="*{username}" required />
+    </div>
+
+    <br>
+
+    <div>
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" required />
+    </div>
+
+    <br>
+
+    <button type="submit">Guardar</button>
+
+</form>
+
+<br>
+<a th:href="@{/login}">Volver al login</a>
+
+</body>
+</html>

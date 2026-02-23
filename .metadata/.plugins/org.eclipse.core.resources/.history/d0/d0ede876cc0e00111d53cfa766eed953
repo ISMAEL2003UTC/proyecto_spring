@@ -1,0 +1,5 @@
+package com.utc.gestion.entity;
+
+public class Empleado {
+
+}

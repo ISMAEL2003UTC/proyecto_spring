@@ -1,0 +1,5 @@
+package com.utc.gestion.repository;
+
+public class EmpleadoRepository {
+
+}
