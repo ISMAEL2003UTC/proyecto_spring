@@ -1,0 +1,72 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    width: 900px;
+    text-align: center;
+}
+
+.container h1 {
+    color: white;
+    margin-bottom: 50px;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+/* ===== GRID MENU ===== */
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+/* ===== CARD BUTTON ===== */
+.card-btn {
+    height: 180px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* ===== COLORS ===== */
+.card-blue {
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+}
+
+.card-green {
+    background: linear-gradient(135deg, #059669, #065f46);
+}
+
+.card-red {
+    background: linear-gradient(135deg, #dc2626, #7f1d1d);
+}
+
+/* ===== HOVER EFFECT ===== */
+.card-btn:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+}
