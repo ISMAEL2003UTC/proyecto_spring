@@ -1,0 +1,361 @@
+/* ===== IMPORTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== VARIABLES ===== */
+:root {
+    --bg-deep:      #0a0c10;
+    --bg-card:      #0f1117;
+    --border:       rgba(255, 255, 255, 0.07);
+    --border-focus: rgba(255, 255, 255, 0.25);
+    --accent-gold:  #c9a96e;
+    --accent-blue:  #5b8dee;
+    --accent-red:   #f07070;
+    --input-bg:     rgba(255, 255, 255, 0.04);
+    --text-primary: #f0ece4;
+    --text-muted:   rgba(240, 236, 228, 0.4);
+    --shadow:       0 32px 64px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 24px;
+    position: relative;
+}
+
+/* Luz ambiental */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 40% at 10% 20%, rgba(201, 169, 110, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 90% 80%, rgba(91, 141, 238, 0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Cuadrícula */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ===== FORM CONTAINER ===== */
+.form-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 780px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 48px 48px 40px;
+    box-shadow: var(--shadow);
+    animation: revealCard 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Línea dorada superior */
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 48px;
+    right: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    opacity: 0.6;
+}
+
+/* ===== ENCABEZADO DEL FORM ===== */
+.form-eyebrow {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.form-container h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.form-header-line {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-gold), transparent);
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ===== GRID DE CAMPOS ===== */
+/* Por defecto: 2 columnas. Se puede sobreescribir con .form-grid--1col o .form-grid--3col */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 28px;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.form-grid--1col { grid-template-columns: 1fr; }
+.form-grid--3col { grid-template-columns: repeat(3, 1fr); }
+
+/* Campo que ocupa toda la fila */
+.form-group--full { grid-column: 1 / -1; }
+
+/* ===== FORM GROUP ===== */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ===== INPUTS, SELECTS, TEXTAREAS ===== */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px 14px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(240,236,228,0.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+.form-group select option {
+    background: #1a1d26;
+    color: var(--text-primary);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(240, 236, 228, 0.18);
+    font-weight: 300;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.08);
+}
+
+/* Autofill */
+.form-group input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px #141720 inset;
+    -webkit-text-fill-color: var(--text-primary);
+    caret-color: var(--text-primary);
+}
+
+/* Campo inválido */
+.form-group input:invalid:not(:placeholder-shown) {
+    border-color: rgba(240, 112, 112, 0.4);
+}
+
+/* ===== SEPARADOR DE SECCIÓN ===== */
+.form-section-title {
+    grid-column: 1 / -1;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    margin-top: 8px;
+}
+
+/* ===== ACCIONES ===== */
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Botón primario — fill dorado */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    border-radius: 3px;
+    color: var(--accent-gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
+}
+
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-primary:hover { color: var(--bg-deep); }
+.btn-primary:hover::before { transform: scaleX(1); }
+.btn-primary:active { transform: scale(0.99); }
+
+/* Botón secundario — texto muted */
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.btn-secondary:hover {
+    border-color: var(--border-focus);
+    color: var(--text-primary);
+}
+
+/* Botón de peligro — para eliminar */
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid rgba(240, 112, 112, 0.4);
+    border-radius: 3px;
+    color: var(--accent-red);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.btn-danger:hover {
+    background: rgba(240, 112, 112, 0.08);
+    border-color: rgba(240, 112, 112, 0.7);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes revealCard {
+    from { opacity: 0; transform: translateY(20px) scale(0.99); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+    .form-container {
+        padding: 40px 24px 32px;
+    }
+    .form-container::before {
+        left: 24px;
+        right: 24px;
+    }
+    .form-grid,
+    .form-grid--3col {
+        grid-template-columns: 1fr;
+    }
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger {
+        justify-content: center;
+    }
+}

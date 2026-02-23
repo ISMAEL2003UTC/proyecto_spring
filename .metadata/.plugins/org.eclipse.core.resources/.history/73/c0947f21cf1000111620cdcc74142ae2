@@ -3,66 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Nuevo Empleado</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/forms.css}">
+    <link rel="stylesheet" th:href="@{/css/empleado-form.css}">
 </head>
 <body>
 
 <div class="form-container">
 
-    <span class="form-eyebrow">Gestión de Personal</span>
     <h2>Registro de Empleado</h2>
-    <div class="form-header-line"></div>
 
-    <form th:action="@{/empleados/guardar}"
+    <form th:action="@{/empleados/guardar}" 
           th:object="${empleado}" method="post">
 
         <div class="form-grid">
 
             <div class="form-group">
                 <label>Nombre</label>
-                <input type="text" th:field="*{nombre}" placeholder="Ej. Juan" required>
+                <input type="text" th:field="*{nombre}" required>
             </div>
 
             <div class="form-group">
                 <label>Apellido</label>
-                <input type="text" th:field="*{apellido}" placeholder="Ej. Pérez" required>
+                <input type="text" th:field="*{apellido}" required>
             </div>
 
             <div class="form-group">
                 <label>Identificación</label>
-                <input type="text" th:field="*{identificacion}" placeholder="Cédula o pasaporte" required>
+                <input type="text" th:field="*{identificacion}" required>
             </div>
 
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" th:field="*{email}" placeholder="correo@ejemplo.com">
+                <input type="email" th:field="*{email}">
             </div>
 
             <div class="form-group">
                 <label>Teléfono</label>
-                <input type="text" th:field="*{telefono1}" placeholder="0999 999 999">
+                <input type="text" th:field="*{telefono1}">
             </div>
 
             <div class="form-group">
                 <label>Discapacidad</label>
-                <input type="text" th:field="*{discapacidad}" placeholder="Ninguna / especificar">
+                <input type="text" th:field="*{discapacidad}">
             </div>
 
             <div class="form-group">
                 <label>Estado</label>
-                <input type="text" th:field="*{estado}" placeholder="Activo / Inactivo">
+                <input type="text" th:field="*{estado}">
             </div>
 
             <div class="form-group">
                 <label>Nacionalidad</label>
-                <input type="text" th:field="*{nacionalidad}" placeholder="Ej. Ecuatoriana">
+                <input type="text" th:field="*{nacionalidad}">
             </div>
 
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn-primary"><span>Guardar</span></button>
+            <button type="submit" class="btn-primary">Guardar</button>
             <a th:href="@{/empleados}" class="btn-secondary">Cancelar</a>
         </div>
 

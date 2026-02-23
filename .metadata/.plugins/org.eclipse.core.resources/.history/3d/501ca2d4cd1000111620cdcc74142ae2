@@ -80,38 +80,6 @@ public class Empleado {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public String getTelefono1() {
-        return telefono1;
-    }
-
-    public void setTelefono1(String telefono1) {
-        this.telefono1 = telefono1;
-    }
-
-    public String getDiscapacidad() {
-        return discapacidad;
-    }
-
-    public void setDiscapacidad(String discapacidad) {
-        this.discapacidad = discapacidad;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
 
     public List<HistoriaClinicaExterna> getHistorias() {
         return historias;
