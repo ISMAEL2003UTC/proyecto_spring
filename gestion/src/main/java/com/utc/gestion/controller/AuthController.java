@@ -30,6 +30,7 @@ public class AuthController {
         return "registro";
     }
 
+    //guardr usuarios
     @PostMapping("/guardarUsuario")
     public String guardarUsuario(@ModelAttribute Usuario usuario) {
 
@@ -42,6 +43,7 @@ public class AuthController {
     }
 
     @GetMapping("/home")
+    //ruta para acceder al home
     public String home() {
         return "home";
     }
