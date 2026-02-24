@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia Clínica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+    <style>
+        .form-group input.input-error,
+        .form-group select.input-error,
+        .form-group textarea.input-error {
+            border-color: rgba(240, 112, 112, 0.6) !important;
+            box-shadow: 0 0 0 3px rgba(240, 112, 112, 0.1) !important;
+        }
+        .form-group input.input-ok,
+        .form-group select.input-ok,
+        .form-group textarea.input-ok {
+            border-color: rgba(74, 222, 154, 0.5) !important;
+            box-shadow: 0 0 0 3px rgba(74, 222, 154, 0.08) !important;
+        }
+        .field-error {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #f07070;
+            letter-spacing: 0.03em;
+            min-height: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+
+    <span class="form-eyebrow">Salud Ocupacional</span>
+    <h2>Historia Clínica Externa</h2>
+    <div class="form-header-line"></div>
+
+    <form id="historiaForm"
+          th:action="@{/historias/guardar}"
+          th:object="${historia}"
+          method="post"
+          novalidate>
+
+        <!-- ID oculto para edición -->
+        <input type="hidden" th:field="*{codigoHistoriaExterna}" />
+
+        <div class="form-grid">
+
+            <!-- Empleado -->
+            <div class="form-group">
+                <label for="empleadoId">Empleado</label>
+                <select id="empleadoId" name="empleadoId">
+                    <option value="">-- Seleccionar empleado --</option>
+                    <option th:each="emp : ${empleados}"
+                            th:value="${emp.codigoEmp}"
+                            th:text="${emp.nombre + ' ' + emp.apellido}"
+                            th:selected="${historia.empleado != null and historia.empleado.codigoEmp == emp.codigoEmp}">
+                    </option>
+                </select>
+                <span class="field-error" id="err-empleado"></span>
+            </div>
+
+            <!-- Tipo de Historia -->
+            <div class="form-group">
+		    <label for="tipoHistoria">Tipo de Historia</label>
+		    <select id="tipoHistoria" th:field="*{tipoHistoria}">
+		        <option value="">-- Seleccionar tipo --</option>
+		        <option value="REINGRESO">Reingreso</option>
+		        <option value="PERIODICA">Periódica</option>
+		        <option value="PREOCUPACIONAL">Preocupacional</option>
+		        <option value="CONTROL">Control</option>
+		    </select>
+		    <span class="field-error" id="err-tipo"></span>
+		</div>
+
+            <!-- Fecha -->
+            <div class="form-group">
+                <label for="fechaHistoria">Fecha</label>
+                <input type="date" id="fechaHistoria" th:field="*{fechaHistoria}">
+                <span class="field-error" id="err-fecha"></span>
+            </div>
+
+            <!-- Estado -->
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                <select id="estado" th:field="*{estado}">
+                    <option value="">-- Seleccionar --</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <span class="field-error" id="err-estado"></span>
+            </div>
+
+            <!-- Detalle — fila completa -->
+            <div class="form-group form-group--full">
+                <label for="detalleRevision">Detalle de Revisión</label>
+                <textarea id="detalleRevision" th:field="*{detalleRevision}"
+                          placeholder="Describe el motivo y resultado de la revisión..."
+                          rows="4" maxlength="500"></textarea>
+                <span class="field-error" id="err-detalle"></span>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary"><span>Guardar</span></button>
+            <a th:href="@{/historias}" class="btn-secondary">Cancelar</a>
+        </div>
+
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+$(function () {
+
+    // Fecha máxima = hoy (no permitir fechas futuras)
+    const hoy = new Date().toISOString().split('T')[0];
+    $('#fechaHistoria').attr('max', hoy);
+
+    /* ============================================================
+       VALIDACIONES EN BLUR / CHANGE
+       ============================================================ */
+
+    $('#empleadoId').on('change', function () {
+        if (!$(this).val()) return showError(this, 'err-empleado', 'Selecciona un empleado.');
+        showOk(this, 'err-empleado');
+    });
+
+    $('#tipoHistoria').on('change', function () {
+        if (!$(this).val()) return showError(this, 'err-tipo', 'Selecciona el tipo de historia.');
+        showOk(this, 'err-tipo');
+    });
+
+    $('#fechaHistoria').on('change blur', function () {
+        const v = $(this).val();
+        if (!v) return showError(this, 'err-fecha', 'La fecha es obligatoria.');
+        if (v > hoy) return showError(this, 'err-fecha', 'No se permiten fechas futuras.');
+        showOk(this, 'err-fecha');
+    });
+
+    $('#estado').on('change', function () {
+        if ($(this).val() === '') return showError(this, 'err-estado', 'Selecciona un estado.');
+        showOk(this, 'err-estado');
+    });
+
+    $('#detalleRevision').on('blur', function () {
+        const v = $(this).val().trim();
+        if (!v) return showError(this, 'err-detalle', 'El detalle de revisión es obligatorio.');
+        if (v.length < 10) return showError(this, 'err-detalle', 'Mínimo 10 caracteres.');
+        if (v.length > 500) return showError(this, 'err-detalle', 'Máximo 500 caracteres.');
+        showOk(this, 'err-detalle');
+    });
+
+    // Contador de caracteres en el detalle
+    $('#detalleRevision').on('input', function () {
+        const len = $(this).val().length;
+        const max = 500;
+        const color = len > max * 0.9 ? '#f07070' : 'rgba(240,236,228,0.4)';
+        let counter = $(this).siblings('.char-counter');
+        if (!counter.length) {
+            counter = $('<span class="char-counter field-error" style="color:' + color + '"></span>');
+            $(this).after(counter);
+        }
+        counter.css('color', color).text(len + ' / ' + max);
+    });
+
+    /* ============================================================
+       VALIDACIÓN AL ENVIAR
+       ============================================================ */
+    $('#historiaForm').on('submit', function (e) {
+        $('#empleadoId, #tipoHistoria, #estado').trigger('change');
+        $('#fechaHistoria, #detalleRevision').trigger('blur');
+
+        if ($('.input-error').length > 0) {
+            e.preventDefault();
+            const first = $('.input-error').first();
+            $('html, body').animate({ scrollTop: first.offset().top - 100 }, 300);
+            first.focus();
+            return false;
+        }
+    });
+
+    /* ============================================================
+       AUXILIARES
+       ============================================================ */
+    function showError(field, errId, msg) {
+        $(field).removeClass('input-ok').addClass('input-error');
+        $('#' + errId).text(msg);
+    }
+
+    function showOk(field, errId) {
+        $(field).removeClass('input-error').addClass('input-ok');
+        $('#' + errId).text('');
+    }
+
+});
+</script>
+
+</body>
+</html>

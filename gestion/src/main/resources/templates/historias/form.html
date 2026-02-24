@@ -63,16 +63,16 @@
 
             <!-- Tipo de Historia -->
             <div class="form-group">
-                <label for="tipoHistoria">Tipo de Historia</label>
-                <select id="tipoHistoria" th:field="*{tipoHistoria}">
-                    <option value="">-- Seleccionar tipo --</option>
-                    <option value="CONSULTA">Consulta</option>
-                    <option value="CONTROL">Control</option>
-                    <option value="EMERGENCIA">Emergencia</option>
-                    <option value="SEGUIMIENTO">Seguimiento</option>
-                </select>
-                <span class="field-error" id="err-tipo"></span>
-            </div>
+		    <label for="tipoHistoria">Tipo de Historia</label>
+		    <select id="tipoHistoria" th:field="*{tipoHistoria}">
+		        <option value="">-- Seleccionar tipo --</option>
+		        <option value="REINGRESO">REINGRESO</option>
+		        <option value="PERIODICA">PERIODICA</option>
+		        <option value="PREOCUPACIONAL">PREOCUPACIONAL</option>
+		        <option value="CONTROL">CONTROL</option>
+		    </select>
+		    <span class="field-error" id="err-tipo"></span>
+		</div>
 
             <!-- Fecha -->
             <div class="form-group">
