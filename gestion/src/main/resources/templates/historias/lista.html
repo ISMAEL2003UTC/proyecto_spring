@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia Clínica Externa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/tables.css}">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- Cabecera -->
+    <div class="page-header">
+        <span class="page-eyebrow">Salud Ocupacional</span>
+        <h1>Historia Clínica Externa</h1>
+        <div class="page-header-line"></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="table-toolbar">
+        <a class="btn-new" th:href="@{/historias/nuevo}">
+            <span>+ Nueva Historia</span>
+        </a>
+    </div>
+
+    <!-- Tabla -->
+    <div class="table-container">
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Empleado</th>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
+                        <th>Detalle</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="h : ${historias}">
+                        <td th:text="${h.codigoHistoriaExterna}"></td>
+                        <td th:text="${h.empleado != null ? h.empleado.nombre + ' ' + h.empleado.apellido : '—'}"></td>
+                        <td th:text="${h.tipoHistoria}"></td>
+                        <td th:text="${h.fechaHistoria}"></td>
+                        <td th:text="${h.detalleRevision}"></td>
+                        <td>
+                            <span th:text="${h.estado == 1 ? 'Activo' : 'Inactivo'}"
+                                  th:class="${h.estado == 1 ? 'badge-active' : 'badge-inactive'}">
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a class="btn-action btn-edit"
+                                   th:href="@{/historias/editar/{id}(id=${h.codigoHistoriaExterna})}"
+                                   title="Editar">&#9998;</a>
+                                <form th:action="@{/historias/eliminar/{id}(id=${h.codigoHistoriaExterna})}"
+                                      method="post"
+                                      onsubmit="return confirm('¿Eliminar esta historia clínica?')">
+                                    <button class="btn-action btn-delete" type="submit" title="Eliminar">&#10005;</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(historias)}">
+                        <td colspan="7" class="table-empty">No hay historias clínicas registradas.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-footer">
+            <span th:text="'Total: ' + ${#lists.size(historias)} + ' registros'"></span>
+        </div>
+    </div>
+
+    <!-- Volver -->
+    <a class="btn-back" th:href="@{/home}">&#8592; Volver al menú</a>
+
+</div>
+
+</body>
+</html>

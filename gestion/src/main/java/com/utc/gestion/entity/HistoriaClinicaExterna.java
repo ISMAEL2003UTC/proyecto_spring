@@ -2,6 +2,7 @@ package com.utc.gestion.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "historia_clinica_externa")
@@ -10,21 +11,84 @@ public class HistoriaClinicaExterna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_historia_externa")
-    private Long codigoHistoria;
+    private Long codigoHistoriaExterna;
 
     @Column(name = "tipo_historia_ext")
-    private String tipo;
+    private String tipoHistoria;
 
     @Column(name = "fecha_historia_ext")
-    private LocalDate fecha;
+    private LocalDate fechaHistoria;
 
-    @Column(name = "detalle_revision_historia_ext")
-    private String detalle;
+    @Column(name = "detalle_revision_historia_ext", length = 500)
+    private String detalleRevision;
 
-    // 🔥 RELACIÓN MUCHOS A UNO
+    @Column(name = "estado_historia_ext")
+    private Integer estado;
+
+    @Column(name = "archivo_historia_ext", columnDefinition = "longtext")
+    private String archivo;
+
     @ManyToOne
     @JoinColumn(name = "fk_codigo_emp")
     private Empleado empleado;
 
-    // getters y setters
+    @Column(name = "creador_usu_historia_ext")
+    private Long creadorUsuario;
+
+    @Column(name = "editor_usu_historia_ext")
+    private Long editorUsuario;
+
+    @Column(name = "fecha_creado_historia_ext", updatable = false)
+    private LocalDateTime fechaCreado;
+
+    @Column(name = "fecha_editado_historia_ext")
+    private LocalDateTime fechaEditado;
+
+    // ===== SE EJECUTA ANTES DE CADA INSERT =====
+    @PrePersist
+    public void prePersist() {
+        this.fechaCreado  = LocalDateTime.now();
+        this.fechaEditado = LocalDateTime.now();
+    }
+
+    // ===== SE EJECUTA ANTES DE CADA UPDATE =====
+    @PreUpdate
+    public void preUpdate() {
+        this.fechaEditado = LocalDateTime.now();
+    }
+
+    // ===== GETTERS Y SETTERS =====
+
+    public Long getCodigoHistoriaExterna() { return codigoHistoriaExterna; }
+    public void setCodigoHistoriaExterna(Long codigoHistoriaExterna) { this.codigoHistoriaExterna = codigoHistoriaExterna; }
+
+    public String getTipoHistoria() { return tipoHistoria; }
+    public void setTipoHistoria(String tipoHistoria) { this.tipoHistoria = tipoHistoria; }
+
+    public LocalDate getFechaHistoria() { return fechaHistoria; }
+    public void setFechaHistoria(LocalDate fechaHistoria) { this.fechaHistoria = fechaHistoria; }
+
+    public String getDetalleRevision() { return detalleRevision; }
+    public void setDetalleRevision(String detalleRevision) { this.detalleRevision = detalleRevision; }
+
+    public Integer getEstado() { return estado; }
+    public void setEstado(Integer estado) { this.estado = estado; }
+
+    public String getArchivo() { return archivo; }
+    public void setArchivo(String archivo) { this.archivo = archivo; }
+
+    public Empleado getEmpleado() { return empleado; }
+    public void setEmpleado(Empleado empleado) { this.empleado = empleado; }
+
+    public Long getCreadorUsuario() { return creadorUsuario; }
+    public void setCreadorUsuario(Long creadorUsuario) { this.creadorUsuario = creadorUsuario; }
+
+    public Long getEditorUsuario() { return editorUsuario; }
+    public void setEditorUsuario(Long editorUsuario) { this.editorUsuario = editorUsuario; }
+
+    public LocalDateTime getFechaCreado() { return fechaCreado; }
+    public void setFechaCreado(LocalDateTime fechaCreado) { this.fechaCreado = fechaCreado; }
+
+    public LocalDateTime getFechaEditado() { return fechaEditado; }
+    public void setFechaEditado(LocalDateTime fechaEditado) { this.fechaEditado = fechaEditado; }
 }

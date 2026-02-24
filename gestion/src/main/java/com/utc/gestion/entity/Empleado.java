@@ -14,6 +14,8 @@ public class Empleado {
 
     @Column(name = "nombre_emp")
     private String nombre;
+    
+    
 
     @Column(name = "apellido_emp")
     private String apellido;

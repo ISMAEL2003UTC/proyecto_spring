@@ -26,35 +26,57 @@
 
     <!-- Tabla -->
     <div class="table-container">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Discapacidad</th>
-                    <th>Estado</th>
-                    <th>Nacionalidad</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="emp : ${empleados}">
-                    <td th:text="${emp.codigoEmp}"></td>
-                    <td th:text="${emp.nombre}"></td>
-                    <td th:text="${emp.apellido}"></td>
-                    <td th:text="${emp.email}"></td>
-                    <td th:text="${emp.telefono1}"></td>
-                    <td th:text="${emp.discapacidad}"></td>
-                    <td th:text="${emp.estado}"></td>
-                    <td th:text="${emp.nacionalidad}"></td>
-                </tr>
-                <tr th:if="${#lists.isEmpty(empleados)}">
-                    <td colspan="8" class="table-empty">No hay empleados registrados.</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Discapacidad</th>
+                        <th>Estado</th>
+                        <th>Nacionalidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="emp : ${empleados}">
+                        <td th:text="${emp.codigoEmp}"></td>
+                        <td th:text="${emp.nombre}"></td>
+                        <td th:text="${emp.apellido}"></td>
+                        <td th:text="${emp.email}"></td>
+                        <td th:text="${emp.telefono1}"></td>
+                        <td th:text="${emp.discapacidad}"></td>
+                        <td th:text="${emp.estado}"></td>
+                        <td th:text="${emp.nacionalidad}"></td>
+                        <td>
+                            <div class="action-buttons">
+                                <!-- Editar -->
+                                <a class="btn-action btn-edit"
+                                   th:href="@{/empleados/editar/{id}(id=${emp.codigoEmp})}"
+                                   title="Editar">
+                                    &#9998;
+                                </a>
+                                <!-- Eliminar -->
+                                <form th:action="@{/empleados/eliminar/{id}(id=${emp.codigoEmp})}"
+                                      method="post"
+                                      onsubmit="return confirm('¿Eliminar este empleado?')">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <button class="btn-action btn-delete" type="submit" title="Eliminar">
+                                        &#10005;
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(empleados)}">
+                        <td colspan="9" class="table-empty">No hay empleados registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="table-footer">
             <span th:text="'Total: ' + ${#lists.size(empleados)} + ' registros'"></span>

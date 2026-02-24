@@ -1,0 +1,123 @@
+package com.utc.gestion.entity;
+
+import jakarta.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "empleado")
+public class Empleado {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codigo_emp")
+    private Long codigoEmp;
+
+    @Column(name = "nombre_emp")
+    private String nombre;
+
+    @Column(name = "apellido_emp")
+    private String apellido;
+
+    @Column(name = "identificacion_emp")
+    private String identificacion;
+
+    @Column(name = "email_emp")
+    private String email;
+    @Column(name = "telefono_1_emp")
+    private String telefono1;
+
+    @Column(name = "discapacidad_emp")
+    private String discapacidad;
+
+    @Column(name = "estado_emp")
+    private String estado;
+
+    @Column(name = "nacionalidad_emp")
+    private String nacionalidad;
+
+    // RELACIÓN 1:N
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
+    private List<HistoriaClinicaExterna> historias;
+
+    // ===== GETTERS Y SETTERS =====
+
+    public Long getCodigoEmp() {
+        return codigoEmp;
+    }
+
+    public void setCodigoEmp(Long codigoEmp) {
+        this.codigoEmp = codigoEmp;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public String getTelefono1() {
+        return telefono1;
+    }
+
+    public void setTelefono1(String telefono1) {
+        this.telefono1 = telefono1;
+    }
+
+    public String getDiscapacidad() {
+        return discapacidad;
+    }
+
+    public void setDiscapacidad(String discapacidad) {
+        this.discapacidad = discapacidad;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    public List<HistoriaClinicaExterna> getHistorias() {
+        return historias;
+    }
+
+    public void setHistorias(List<HistoriaClinicaExterna> historias) {
+        this.historias = historias;
+    }
+}

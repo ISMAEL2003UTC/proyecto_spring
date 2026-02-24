@@ -286,3 +286,28 @@ body::after {
     .menu { grid-template-columns: 1fr; }
     .card-btn { height: 160px; }
 }
+
+
+/* ===== BADGES DE ESTADO ===== */
+.badge-active,
+.badge-inactive {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.badge-active {
+    background: rgba(74, 222, 154, 0.1);
+    border: 1px solid rgba(74, 222, 154, 0.3);
+    color: #4ade9a;
+}
+
+.badge-inactive {
+    background: rgba(240, 112, 112, 0.1);
+    border: 1px solid rgba(240, 112, 112, 0.3);
+    color: #f07070;
+}

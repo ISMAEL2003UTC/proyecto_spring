@@ -1,0 +1,5 @@
+package com.utc.gestion.controller;
+
+public class HistoriaClinicaExternaController {
+
+}

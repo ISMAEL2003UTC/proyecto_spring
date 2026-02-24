@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+        <span class="dashboard-eyebrow">Management System</span>
+        <h1>Main Panel</h1>
+        <div class="dashboard-line"></div>
+    </div>
+
+    <!-- Menú de cards -->
+    <div class="menu">
+
+        <a class="card-btn card-blue" th:href="@{/empleados}">
+            <span class="card-icon">&#9881;</span>
+            <span class="card-label">Módulo</span>
+            <span class="card-title">Employee Management</span>
+            <span class="card-arrow">&#8594;</span>
+        </a>
+
+        <a class="card-btn card-green" th:href="@{/historias}">
+            <span class="card-icon">&#10010;</span>
+            <span class="card-label">Módulo</span>
+            <span class="card-title">External Medical Record</span>
+            <span class="card-arrow">&#8594;</span>
+        </a>
+
+        <a class="card-btn card-red" th:href="@{/logout}">
+            <span class="card-icon">&#9099;</span>
+            <span class="card-label">Sesión</span>
+            <span class="card-title">Cerrar Sesión</span>
+            <span class="card-arrow">&#8594;</span>
+        </a>
+
+    </div>
+
+    <!-- Footer -->
+    <p class="dashboard-footer">UTC &mdash; Sistema Interno &mdash; 2026</p>
+
+</div>
+
+</body>
+</html>

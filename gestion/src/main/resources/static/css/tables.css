@@ -152,10 +152,42 @@ body::after {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 4px;
-    overflow: hidden;
+    overflow: visible;  /* ← era hidden, bloqueaba el scroll del hijo */
     box-shadow: var(--shadow);
     opacity: 0;
     animation: fadeUp 0.6s 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ===== SCROLL HORIZONTAL ===== */
+.table-scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    /* Scrollbar estilizada */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 169, 110, 0.3) transparent;
+}
+
+/* Scrollbar Webkit (Chrome, Safari, Edge) */
+.table-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background: rgba(201, 169, 110, 0.35);
+    border-radius: 2px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(201, 169, 110, 0.6);
+}
+
+/* Evita que la tabla se comprima */
+.table-scroll .data-table {
+    min-width: 700px;
 }
 
 /* Línea dorada superior */
@@ -261,6 +293,57 @@ body::after {
 .btn-back:hover {
     color: var(--text-primary);
     border-bottom-color: var(--text-muted);
+}
+
+/* ===== BOTONES DE ACCIÓN ===== */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    background: transparent;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Editar — azul */
+.btn-edit {
+    color: var(--accent-blue);
+    border-color: rgba(91, 141, 238, 0.25);
+}
+
+.btn-edit:hover {
+    background: rgba(91, 141, 238, 0.1);
+    border-color: rgba(91, 141, 238, 0.5);
+}
+
+/* Eliminar — rojo */
+.btn-delete {
+    color: #f07070;
+    border-color: rgba(240, 112, 112, 0.25);
+}
+
+.btn-delete:hover {
+    background: rgba(240, 112, 112, 0.1);
+    border-color: rgba(240, 112, 112, 0.5);
+}
+
+/* Quitar margen del form inline */
+.action-buttons form {
+    margin: 0;
+    padding: 0;
 }
 
 /* ===== ANIMATIONS ===== */

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+    <style>
+        /* ===== ESTILOS DE VALIDACIÓN ===== */
+        .form-group input.input-error,
+        .form-group select.input-error {
+            border-color: rgba(240, 112, 112, 0.6) !important;
+            box-shadow: 0 0 0 3px rgba(240, 112, 112, 0.1) !important;
+        }
+
+        .form-group input.input-ok,
+        .form-group select.input-ok {
+            border-color: rgba(74, 222, 154, 0.5) !important;
+            box-shadow: 0 0 0 3px rgba(74, 222, 154, 0.08) !important;
+        }
+
+        .field-error {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #f07070;
+            letter-spacing: 0.03em;
+            min-height: 16px;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-primary:disabled::before {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+
+    <span class="form-eyebrow">Gestión de Personal</span>
+    <h2>Registro de Empleado</h2>
+    <div class="form-header-line"></div>
+
+    <form id="empleadoForm"
+          th:action="@{/empleados/guardar}"
+          th:object="${empleado}"
+          method="post"
+          novalidate>
+
+        <input type="hidden" th:field="*{codigoEmp}" />
+
+        <div class="form-grid">
+
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" th:field="*{nombre}"
+                       placeholder="Ej. Juan" autocomplete="off">
+                <span class="field-error" id="err-nombre"></span>
+            </div>
+
+            <!-- Apellido -->
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" th:field="*{apellido}"
+                       placeholder="Ej. Pérez" autocomplete="off">
+                <span class="field-error" id="err-apellido"></span>
+            </div>
+
+            <!-- Identificación -->
+            <div class="form-group">
+                <label for="identificacion">Identificación</label>
+                <input type="text" id="identificacion" th:field="*{identificacion}"
+                       placeholder="10 dígitos (cédula)" autocomplete="off" maxlength="13">
+                <span class="field-error" id="err-identificacion"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" th:field="*{email}"
+                       placeholder="correo@ejemplo.com" autocomplete="off">
+                <span class="field-error" id="err-email"></span>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="form-group">
+                <label for="telefono1">Teléfono</label>
+                <input type="text" id="telefono1" th:field="*{telefono1}"
+                       placeholder="0999999999" autocomplete="off" maxlength="10">
+                <span class="field-error" id="err-telefono1"></span>
+            </div>
+
+            <!-- Discapacidad -->
+            <div class="form-group">
+                <label for="discapacidad">Discapacidad</label>
+                <select id="discapacidad" th:field="*{discapacidad}">
+                    <option value="">-- Seleccionar --</option>
+                    <option value="SI">Sí</option>
+                    <option value="NO">No</option>
+                </select>
+                <span class="field-error" id="err-discapacidad"></span>
+            </div>
+
+            <!-- Estado -->
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                <select id="estado" th:field="*{estado}">
+                    <option value="">-- Seleccionar --</option>
+                    <option value="ACTIVO">Activo</option>
+                    <option value="INACTIVO">Inactivo</option>
+                </select>
+                <span class="field-error" id="err-estado"></span>
+            </div>
+
+            <!-- Nacionalidad -->
+            <div class="form-group">
+                <label for="nacionalidad">Nacionalidad</label>
+                <input type="text" id="nacionalidad" th:field="*{nacionalidad}"
+                       placeholder="Ej. Ecuatoriana" autocomplete="off">
+                <span class="field-error" id="err-nacionalidad"></span>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" id="btnGuardar" class="btn-primary"><span>Guardar</span></button>
+            <a th:href="@{/empleados}" class="btn-secondary">Cancelar</a>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+$(function () {
+
+    
+    const SOLO_LETRAS    = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s'-]+$/;
+    const SOLO_NUMEROS   = /^\d+$/;
+    const EMAIL_REGEX    = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const CEDULA_EC      = /^\d{10}$/;
+    const PASAPORTE      = /^[A-Z0-9]{6,13}$/i;
+
+   
+    $('#nombre, #apellido, #nacionalidad').on('keypress', function (e) {
+        const char = String.fromCharCode(e.which);
+        if (!SOLO_LETRAS.test(char)) {
+            e.preventDefault();
+            shakeField(this);
+        }
+    });
+
+    $('#telefono1').on('keypress', function (e) {
+        const char = String.fromCharCode(e.which);
+        if (!SOLO_NUMEROS.test(char)) {
+            e.preventDefault();
+            shakeField(this);
+        }
+    });
+
+    $('#identificacion').on('keypress', function (e) {
+        const char = String.fromCharCode(e.which);
+        if (!/^[a-zA-Z0-9]$/.test(char)) {
+            e.preventDefault();
+            shakeField(this);
+        }
+    });
+
+   
+    $('#nombre').on('blur', function () {
+        const v = $(this).val().trim();
+        if (!v)                        return showError(this, 'err-nombre', 'El nombre es obligatorio.');
+        if (v.length < 2)              return showError(this, 'err-nombre', 'Mínimo 2 caracteres.');
+        if (v.length > 60)             return showError(this, 'err-nombre', 'Máximo 60 caracteres.');
+        if (!SOLO_LETRAS.test(v))      return showError(this, 'err-nombre', 'Solo se permiten letras.');
+        showOk(this, 'err-nombre');
+    });
+
+    $('#apellido').on('blur', function () {
+        const v = $(this).val().trim();
+        if (!v)                        return showError(this, 'err-apellido', 'El apellido es obligatorio.');
+        if (v.length < 2)              return showError(this, 'err-apellido', 'Mínimo 2 caracteres.');
+        if (v.length > 60)             return showError(this, 'err-apellido', 'Máximo 60 caracteres.');
+        if (!SOLO_LETRAS.test(v))      return showError(this, 'err-apellido', 'Solo se permiten letras.');
+        showOk(this, 'err-apellido');
+    });
+
+    $('#identificacion').on('blur', function () {
+        const v = $(this).val().trim();
+        if (!v) return showError(this, 'err-identificacion', 'La identificación es obligatoria.');
+        if (CEDULA_EC.test(v)) {
+            if (!validarCedulaEC(v)) return showError(this, 'err-identificacion', 'Cédula ecuatoriana inválida.');
+            return showOk(this, 'err-identificacion');
+        }
+        if (PASAPORTE.test(v)) return showOk(this, 'err-identificacion');
+        showError(this, 'err-identificacion', 'Ingresa una cédula (10 dígitos) o pasaporte válido.');
+    });
+
+    $('#email').on('blur', function () {
+        const v = $(this).val().trim();
+        if (!v)                        return clearField(this, 'err-email'); // opcional
+        if (!EMAIL_REGEX.test(v))      return showError(this, 'err-email', 'Ingresa un email válido (ej. correo@dominio.com).');
+        showOk(this, 'err-email');
+    });
+
+    $('#telefono1').on('blur', function () {
+        const v = $(this).val().trim();
+        if (!v)                        return clearField(this, 'err-telefono1'); // opcional
+        if (!SOLO_NUMEROS.test(v))     return showError(this, 'err-telefono1', 'Solo se permiten números.');
+        if (v.length !== 10)           return showError(this, 'err-telefono1', 'El teléfono debe tener exactamente 10 dígitos.');
+        if (!/^(09|0[2-7])/.test(v))   return showError(this, 'err-telefono1', 'Formato ecuatoriano: empieza con 09 (celular) o 02-07 (fijo).');
+        showOk(this, 'err-telefono1');
+    });
+
+    $('#discapacidad').on('change', function () {
+        const v = $(this).val();
+        if (!v) return showError(this, 'err-discapacidad', 'Selecciona una opción.');
+        showOk(this, 'err-discapacidad');
+    });
+
+    $('#estado').on('change', function () {
+        const v = $(this).val();
+        if (!v) return showError(this, 'err-estado', 'Selecciona un estado.');
+        showOk(this, 'err-estado');
+    });
+
+    $('#nacionalidad').on('blur', function () {
+        const v = $(this).val().trim();
+        if (!v)                        return clearField(this, 'err-nacionalidad'); // opcional
+        if (!SOLO_LETRAS.test(v))      return showError(this, 'err-nacionalidad', 'Solo se permiten letras.');
+        if (v.length < 3)              return showError(this, 'err-nacionalidad', 'Mínimo 3 caracteres.');
+        showOk(this, 'err-nacionalidad');
+    });
+
+ 
+    $('#empleadoForm').on('submit', function (e) {
+        $('#nombre, #apellido, #identificacion, #email, #telefono1, #nacionalidad').trigger('blur');
+        $('#discapacidad, #estado').trigger('change');
+
+        if ($('.input-error').length > 0) {
+            e.preventDefault();
+            const first = $('.input-error').first();
+            $('html, body').animate({ scrollTop: first.offset().top - 100 }, 300);
+            first.focus();
+            return false;
+        }
+
+        const nombre = $('#nombre').val().trim();
+        const apellido = $('#apellido').val().trim();
+        const identificacion = $('#identificacion').val().trim();
+
+        if (!nombre || !apellido || !identificacion) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    /* ============================================================
+       FUNCIONES AUXILIARES
+       ============================================================ */
+    function showError(field, errId, msg) {
+        $(field).removeClass('input-ok').addClass('input-error');
+        $('#' + errId).text(msg);
+    }
+
+    function showOk(field, errId) {
+        $(field).removeClass('input-error').addClass('input-ok');
+        $('#' + errId).text('');
+    }
+
+    function clearField(field, errId) {
+        $(field).removeClass('input-error input-ok');
+        $('#' + errId).text('');
+    }
+
+    function shakeField(field) {
+        $(field).css('border-color', 'rgba(240, 112, 112, 0.8)');
+        setTimeout(() => $(field).css('border-color', ''), 300);
+    }
+
+    /* ============================================================
+       ALGORITMO DE VALIDACIÓN DE CÉDULA ECUATORIANA
+       ============================================================ */
+    function validarCedulaEC(cedula) {
+        if (cedula.length !== 10) return false;
+        const provincia = parseInt(cedula.substring(0, 2));
+        if (provincia < 1 || provincia > 24) return false;
+        const digitos = cedula.split('').map(Number);
+        const verificador = digitos[9];
+        let suma = 0;
+        for (let i = 0; i < 9; i++) {
+            let val = digitos[i];
+            if (i % 2 === 0) {
+                val *= 2;
+                if (val > 9) val -= 9;
+            }
+            suma += val;
+        }
+        const residuo = suma % 10;
+        const digitoCalculado = residuo === 0 ? 0 : 10 - residuo;
+        return digitoCalculado === verificador;
+    }
+
+});
+</script>
+
+</body>
+</html>
